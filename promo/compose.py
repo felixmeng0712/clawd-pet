@@ -205,7 +205,7 @@ LOG_DAY = {0: ("05:36", "dawn"), 50: ("12:00", "day"), 100: ("18:00", "dusk"), 1
 LOG_WX = {0: ("weather", "rain"), 75: ("weather", "snow"), 150: ("weather", "thunderstorm")}
 
 SEGMENTS = [
-    ("hero", "pet", 0, 85, [650, [(F_HERO, "Clawd", WHITE),
+    ("hero", "multi", 125, 85, [650, [(F_HERO, "Clawd", WHITE),
                                    (F_HERO_SUB, "a tiny desk pet for Claude Code", GREY)]]),
     ("dev", "pet", 0, 110, ("01 · MEET CLAWD", "A pixel crab on your desk",
                              "It lives on a little beach on an M5Stack screen and naps when nothing is going on."), None),
@@ -219,7 +219,7 @@ SEGMENTS = [
                                  "Live local weather: rain, snow, fog and thunderstorms with lightning."), LOG_WX),
     ("dev", "touch", 0, 170, ("06 · TOUCH", "Pet it",
                                "Tap its eyes and it blushes. Hold to tickle. Poke it too much and it gets mad."), LOG_TOUCH),
-    ("hero", "multi", 100, 110, [650, [(F_HERO, "Clawd", WHITE),
+    ("hero", "pet", 0, 110, [650, [(F_HERO, "Clawd", WHITE),
                                        (F_HERO_SUB, "M5Stack CoreS3  ·  ESP32  ·  Claude Code hooks", GREY),
                                        (F_SMALL, " ", GREY),
                                        (F_SMALL, "Unofficial fan project. Clawd is Anthropic's mascot.", DIM)]]),
@@ -233,7 +233,8 @@ def render_segment(seg):
         fs = frames(scene)
         for i in range(n):
             png = fs[min(start + i, len(fs) - 1)]
-            yield hero_frame(png, spec, ease((i - 6) / 18))
+            # 片头第一帧就是完整标题：X 拿视频第一帧当封面
+            yield hero_frame(png, spec, 1.0 if seg is SEGMENTS[0] else ease((i - 6) / 18))
         return
     _, scene, start, n, cap, log = seg
     fs = frames(scene)
