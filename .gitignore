@@ -1,0 +1,11 @@
+firmware/clawd_pet/secrets.h
+.DS_Store
+build/
+
+# 宣传视频的抓帧和成片
+promo/frames/
+promo/*.mp4
+promo/*.wav
+promo/*.png
+CLAUDE.local.md
+docs/desk-plan.html
